@@ -5,6 +5,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(name = "computacao-grafica",
         url = "${computacao.grafica-url}", configuration = FeignConfig.class)
@@ -31,4 +32,15 @@ public interface ApiComputacaoGraficaClient {
             @RequestBody FotoRequestDto request
     );
 
+    @PostMapping("webhook/translacao")
+    TranslacaoRequestDto translatarFoto(
+            @RequestHeader("Authorization") String auth,
+            @RequestBody TranslacaoRequestDto request
+    );
+
+    @PostMapping("webhook/escala")
+    EscalarRequestDto escalarFoto(
+            @RequestHeader("Authorization") String auth,
+            @RequestBody EscalarRequestDto request
+    );
 }

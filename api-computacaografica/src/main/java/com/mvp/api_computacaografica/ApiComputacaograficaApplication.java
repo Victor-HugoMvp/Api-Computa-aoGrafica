@@ -1,9 +1,6 @@
 package com.mvp.api_computacaografica;
 
-import com.mvp.api_computacaografica.service.FotoService;
-import com.mvp.api_computacaografica.service.ProcessamentoService;
-import com.mvp.api_computacaografica.service.TelefoneService;
-import com.mvp.api_computacaografica.service.TokenService;
+import com.mvp.api_computacaografica.service.*; // Importa todos os services
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,34 +16,36 @@ public class ApiComputacaograficaApplication {
 		SpringApplication.run(ApiComputacaograficaApplication.class, args);
 	}
 
+
 	@Bean
-	CommandLineRunner executarAoIniciar(TokenService tokenService) {
+	CommandLineRunner executarTudo(
+			TokenService tokenService,
+			ProcessamentoService processamentoService,
+			TelefoneService telefoneService,
+			FotoService fotoService,
+			TranslacaoService translacaoService,
+			EscalarService escalarService
+	) {
 		return args -> {
-			System.out.println(">>> Iniciando chamada automática do serviço...");
+			System.out.println(">>> Iniciando fluxo completo de computação gráfica...");
+
+
 			tokenService.buscarToken();
-		};
-	}
-
-
-	@Bean
-	CommandLineRunner testeProcessamento(ProcessamentoService service) {
-		return args -> {
-			service.enviarTextoParaProcessar("Olá Mundo!");
-		};
-	}
-
-	@Bean
-	CommandLineRunner testeCadastrarTelefone(TelefoneService telefoneService){
-		return args -> {
 			telefoneService.buscarTelefone();
+			fotoService.buscarImagem();
+			processamentoService.enviarTextoParaProcessar("Olá Mundo!");
+
+
+			String url = "https://m.media-amazon.com/images/M/MV5BMTMwNzIyMDcxNF5BMl5BanBnXkFtZTcwMDM4ODcyMw@@._V1_.jpg";
+			String token = "b982015b7d32306d48c0";
+
+
+			System.out.println(">>> Executando Translação...");
+			translacaoService.processar(url, 60, 50, token);
+
+
+			System.out.println(">>> Executando Escala...");
+			escalarService.processar(url, 40);
 		};
 	}
-
-	@Bean
-	CommandLineRunner testeenviarImagem(FotoService fotoService){
-		return args -> {
-			fotoService.buscarImagem();	
-		};
-	}
-
 }
