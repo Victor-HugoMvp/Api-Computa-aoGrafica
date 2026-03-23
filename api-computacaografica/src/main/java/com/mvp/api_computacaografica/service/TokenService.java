@@ -12,16 +12,15 @@ public class TokenService {
     @Autowired
     private ApiComputacaoGraficaClient client;
 
-    public void buscarToken(){
+    public String buscarToken(){
         try{
             TokenRequestDto request = new TokenRequestDto("VICTOR HUGO MARCELINO FRAGA");
             TokenResponseDto response = client.getToken(request);
 
-            if(response != null && response.token() != null){
-                System.out.println("Token " + response.token());
-            }
-            else{
-                System.out.println("Token não encontrado na resposta.");
+            if (response != null && response.token() != null) {
+                return response.token(); // Retorna o valor para quem chamou
+            } else {
+                throw new RuntimeException("Token não encontrado na resposta da API.");
             }
         }catch (Exception e){
             throw new IllegalArgumentException("Erro ao realizar requisição");

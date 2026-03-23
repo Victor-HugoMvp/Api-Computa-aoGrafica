@@ -36,7 +36,7 @@ public class ApiComputacaograficaApplication {
 			processamentoService.enviarTextoParaProcessar("Olá Mundo!");
 
 
-			String url = "https://m.media-amazon.com/images/M/MV5BMTMwNzIyMDcxNF5BMl5BanBnXkFtZTcwMDM4ODcyMw@@._V1_.jpg";
+			String url = "https://i.imgur.com/8N4N8N8.png";
 			String token = "b982015b7d32306d48c0";
 
 
